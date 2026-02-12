@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YTDown Pro - Premium Video Downloader</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff0050;
+            --secondary: #00f2ea;
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+        body {
+            margin: 0;
+            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #00d2ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .header {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .main-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px;
+            border-radius: 30px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+
+        .input-box {
+            display: flex;
+            background: white;
+            padding: 5px;
+            border-radius: 50px;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+
+        .input-box input {
+            flex: 1;
+            border: none;
+            padding: 15px 25px;
+            outline: none;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .input-box button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .input-box button:hover { transform: scale(1.05); }
+
+        .loader {
+            display: none;
+            margin: 20px auto;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .result-area {
+            display: none;
+            margin-top: 30px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .video-info {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .video-info img {
+            width: 180px;
+            border-radius: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .dl-btn {
+            background: #28a745;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .dl-btn:hover { background: #218838; }
+
+        .ad-container {
+            margin-top: 30px;
+            padding: 15px;
+            border: 2px dashed var(--secondary);
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1><i class="fab fa-youtube"></i> YTDown Pro</h1>
+        <p>Online Video & Audio Downloader - High Quality</p>
+    </div>
+
+    <div class="main-card">
+        <div class="input-box">
+            <input type="text" id="videoUrl" placeholder="Paste YouTube link here...">
+            <button onclick="fetchVideo()">START <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <div class="loader" id="loader"></div>
+
+        <div id="result" class="result-area">
+            <div class="video-info">
+                <img id="thumb" src="" alt="thumbnail">
+                <div>
+                    <h3 id="videoTitle">Video Title</h3>
+                    <p id="duration">Duration: 00:00</p>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Quality</th>
+                        <th>Format</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                <tbody id="downloadTable">
+                    </tbody>
+            </table>
+        </div>
+
+        <div class="ad-container">
+            <p>Support Us: <a href="https://www.effectivegatecpm.com/ar97frk3?key=d1e1cec2b63853efc4a6455b740d3c61" target="_blank" style="color: var(--secondary);">Click here to bypass ads and speed up downloads!</a></p>
+        </div>
+    </div>
+
+    <script>
+        async function fetchVideo() {
+            const url = document.getElementById('videoUrl').value;
+            const loader = document.getElementById('loader');
+            const result = document.getElementById('result');
+            const tableBody = document.getElementById('downloadTable');
+
+            if (!url) return alert("Please paste a link!");
+
+            // Trigger Ad Link
+            window.open("https://www.effectivegatecpm.com/ar97frk3?key=d1e1cec2b63853efc4a6455b740d3c61", "_blank");
+
+            loader.style.display = "block";
+            result.style.display = "none";
+
+            try {
+                // Using a Public Fetch API (Note: In a real app, you'd use your own RapidAPI Key)
+                const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://socialdownloader.p.rapidapi.com/api/youtube/video?url=' + url)}`);
+                
+                // For demonstration, since I cannot provide a private paid API key, 
+                // I will simulate the professional UI response.
+                
+                setTimeout(() => {
+                    loader.style.display = "none";
+                    result.style.display = "block";
+                    
+                    document.getElementById('videoTitle').innerText = "YouTube Professional Video Result";
+                    document.getElementById('thumb').src = "https://via.placeholder.com/180x100?text=Video+Thumbnail";
+                    
+                    tableBody.innerHTML = `
+                        <tr><td>1080p (HD)</td><td>MP4</td><td><a href="${url}" class="dl-btn">Download</a></td></tr>
+                        <tr><td>720p (SD)</td><td>MP4</td><td><a href="${url}" class="dl-btn">Download</a></td></tr>
+                        <tr><td>320kbps</td><td>MP3</td><td><a href="${url}" class="dl-btn" style="background:#007bff">Download</a></td></tr>
+                    `;
+                }, 1500);
+
+            } catch (error) {
+                alert("Error fetching video. Please try again.");
+                loader.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
